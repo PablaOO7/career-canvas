@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Interactive CV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --text-color: #ffffff;
+            --primary-color: #2d2d2d;
+            --secondary-color: #3a3a3a;
+            --accent-color: #61dafb;
+            --border-color: #3a3a3a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .divider {
+            border: 0;
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 2rem 0;
+        }
+
+        .content {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .left-column {
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .right-column {
+            flex: 2;
+        }
+
+        .block {
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .block h2 {
+            margin-top: 0;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .languages li, .skills li {
+            margin-bottom: 0.5rem;
+        }
+
+        .socials a {
+            display: block;
+            color: var(--text-color);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+        }
+
+        .socials a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-tabs {
+            display: flex;
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-tabs li {
+            flex: 1;
+        }
+
+        .nav-tabs a {
+            display: block;
+            text-align: center;
+            padding: 0.75rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+
+        .nav-tabs a:hover,
+        .nav-tabs a.active {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .experience-item, .project-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .experience-item h3, .project-item h3 {
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .date {
+            font-style: italic;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+
+            .left-column {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="/api/placeholder/100/100" alt="Your Name" class="profile-pic">
+            <h1>Your Name</h1>
+            <p class="tagline">Your Professional Tagline</p>
+        </header>
+
+        <hr class="divider">
+
+        <div class="content">
+            <div class="left-column">
+                <div class="block">
+                    <h2>About</h2>
+                    <p>Your brief introduction goes here.</p>
+                    <p>📧 email@example.com</p>
+                    <p>📍 Location</p>
+                </div>
+
+                <div class="block">
+                    <h2>Languages</h2>
+                    <ul class="languages">
+                        <li>Language 1: Level</li>
+                        <li>Language 2: Level</li>
+                    </ul>
+                </div>
+
+                <div class="block">
+                    <h2>Skills</h2>
+                    <ul class="skills">
+                        <li>Skill 1: Level</li>
+                        <li>Skill 2: Level</li>
+                        <li>Skill 3: Level</li>
+                    </ul>
+                </div>
+
+                <div class="block">
+                    <h2>Socials</h2>
+                    <div class="socials">
+                        <a href="#">Platform 1: Username</a>
+                        <a href="#">Platform 2: Username</a>
+                        <a href="#">Platform 3: Username</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <nav>
+                    <ul class="nav-tabs">
+                        <li><a href="#work" class="active">Work</a></li>
+                        <li><a href="#education">Education</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#talks">Talks</a></li>
+                    </ul>
+                </nav>
+
+                <div id="work" class="tab-content active">
+                    <div class="experience-item">
+                        <h3>Job Title</h3>
+                        <p class="date">Company Name | Start Date - End Date</p>
+                        <ul>
+                            <li>Key responsibility or achievement</li>
+                            <li>Another important contribution</li>
+                        </ul>
+                    </div>
+                    <!-- Add more experience items as needed -->
+                </div>
+
+                <div id="education" class="tab-content">
+                    <div class="experience-item">
+                        <h3>Degree Name</h3>
+                        <p class="date">University Name | Graduation Year</p>
+                        <p>Brief description or achievements</p>
+                    </div>
+                    <!-- Add more education items as needed -->
+                </div>
+
+                <div id="projects" class="tab-content">
+                    <div class="project-item">
+                        <h3>Project Name</h3>
+                        <p>Brief description of the project and your role.</p>
+                        <a href="#" class="project-link">View Project</a>
+                    </div>
+                    <!-- Add more project items as needed -->
+                </div>
+
+                <div id="talks" class="tab-content">
+                    <div class="experience-item">
+                        <h3>Talk Title</h3>
+                        <p class="date">Conference Name | Date</p>
+                        <p>Brief description of the talk</p>
+                    </div>
+                    <!-- Add more talk items as needed -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab navigation
+        const tabLinks = document.querySelectorAll('.nav-tabs a');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+
+                tabLinks.forEach(l => l.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                link.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
