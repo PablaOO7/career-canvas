@@ -62,6 +62,23 @@
             margin: 2rem 0;
         }
 
+        a {
+            color: #ff9800; /* Normal link color */
+            text-decoration: none; /* Remove underline */
+        }
+
+        a:hover {
+            color: #ffc107; /* Lighter orange for hover state */
+        }
+
+        a:visited {
+            color: #ff5722; /* Darker orange for visited links */
+        }
+
+        a:active {
+            color: #ff9800; /* Normal color when active */
+        }
+
         .content {
             display: flex;
             gap: 2rem;
@@ -69,12 +86,13 @@
 
         .left-column {
             flex: 1;
-            max-width: 300px;
+            min-width: 300px;
+            max-width: 350px;
         }
 
         .right-column {
             flex: 2;
-            min-width: 900px;
+            min-width: 700px;
         }
 
         .right-column-wrapper {
@@ -177,13 +195,29 @@
             font-weight: 600;
         }
 
+        /* Override link styles for project-link class */
+        .project-link:hover {
+            color: var(--bg-color); /* Keep the same color on hover */
+        }
+
+        .project-link:visited {
+            color: var(--bg-color); /* Keep the same color when visited */
+        }
+
+        .project-link:active {
+            color: var(--bg-color); /* Keep the same color when active */
+        }
+
         @media (max-width: 768px) {
             .content {
-                flex-direction: column;
+               max-width: 100%;
             }
 
             .left-column {
                 max-width: 100%;
+            }
+            .right-column {
+                max-width: 100%; /* make the right column take up the full width on smaller screens */
             }
         }
     </style>
@@ -193,7 +227,7 @@
         <header class="header">
             <img src="Image.jpg" alt="Jaspreet Singh Pabla" class="profile-pic">
             <h1>Jaspreet Singh Pabla</h1>
-            <p class="tagline">Computational Biologist</p>
+            <p class="tagline">Experienced Computational Biologist with expertise in biomedical data analysis, visualization, and application development</p>
         </header>
 
         <hr class="divider">
@@ -202,8 +236,7 @@
             <div class="left-column">
                 <div class="block">
                     <h2>About</h2>
-                    <p>Experienced Computational Biologist with expertise in biomedical data analysis, visualization, and application development.</p>
-                    <p>📧 rev@gmail.com</p>
+                    <p>📧 pablajaspreet94@gmail.com</p>
                     <p>📍 India</p>
                 </div>
 
@@ -243,93 +276,149 @@
                             <li><a href="#work" class="active">Work</a></li>
                             <li><a href="#education">Education</a></li>
                             <li><a href="#projects">Projects</a></li>
-                            <li><a href="#talks">Talks</a></li>
+                            <li><a href="#certificates">Certificates</a></li>
                         </ul>
                     </nav>
-
+                    
                     <div id="work" class="tab-content active">
-                        <div class="experience-item">
-                            <h3>Bioinformatics Engineer I</h3>
-                            <p class="date">Elucidata Data Consulting Pvt Ltd | Aug 2022 - Present</p>
-                            <ul>
-                                <li>Developed RShiny applications and data visualization projects using R and Python programming languages and Shiny libraries for biomedical data analysis and visualization in B2B SaaS products.</li>
-                                <li>Integrated Spotfire in-built visualizations with custom visualizations from JSViz framework, Spotfire MODS, Plotly.js, RShiny, and JavaScript-based Text Area scripts.</li>
-                                <li>Utilized Spotfire's data functions and programming capabilities in R and Python for data transformation.</li>
-                                <li>Created complex SQL queries through custom queries and information links for data ingestion.</li>
-                                <li>Built a collection of reusable IronPython scripts stored within DXP for streamlined development.</li>
-                                <li>Worked as a Spotfire developer, creating Spotfire dashboards for biological data using IronPython, R, SQL, Python, JavaScript, HTML, and CSS.</li>
-                                <li>Successfully contributed to multiple high-visibility projects by developing reports (using Rmarkdown) that facilitated data-driven decision-making for businesses.</li>
-                                <li>Worked on client-facing projects involving MongoDB, pipeline development, and Docker for efficient data processing and analysis.</li>
-                                <li>Developed pipelines and Docker containers to streamline deployment and ensure scalability across environments.</li>
-                            </ul>
-                        </div>
-
-                        <div class="experience-item">
-                            <h3>Biomedical Data Analytics Fellow</h3>
-                            <p class="date">Elucidata Data Consulting Pvt Ltd | Feb 2022 - Jul 2022</p>
-                            <ul>
-                                <li>Hands-on training in Dockers, Pandas, Python Data-Analysis, R, and R shiny</li>
-                                <li>Developed a dashboard for easy querying, visualization, and report generation</li>
-                                <li>Self-paced training through Udemy courses.</li>
-                                <li>Hands-on training over Dockers, Pandas and Python Data-Analysis, R, R shiny.</li>
-                                <li>Involved in in-house industrial project based on R language, SQL and the Shiny framework.</li>
-                                <li>The dashboard developed during the project enables easy querying, allowing users to search, visualise, audit, and
-                                    generate reports for an overview of many facets of datasets using a web-based GUI</li>
-                            </ul>
-                        </div>
-                        <div class="experience-item">
-                            <h3>Subject Matter Expert</h3>
-                            <p class="date">Chegg Inc.  | Mar 2020 - Jul 2022</p>
-                            <ul>
-                                <li>To answer questions asked by students from globally.</li>
-                                <li>Follow the quality parameters to solve QnA.</li>
-                                <li>Ensure that the guidelines of answering are strictly followed.</li>
-                                <li>To ensure academic integrity.</li>
-                            </ul>
-                        </div>
-                        <div class="experience-item"></div>
-                            <h3>Teaching Assistant and Counsellor</h3>
-                            <p class="date">Enbee Education Center Pvt. Ltd | Nov 2018 - Dec 2019</p>
-                            <ul>
-                                <li>Train students for SAT, GRE, and TOEFL.</li>
-                                <li>Advising students on education opportunities, application procedures, visa applications, and other documentation for
-                                    study abroad.</li>
-                                <li>Liaising with students, other offices, and client institutions.</li>
-                                <li>Assisting with the general running of the office to ensure smooth operations.</li>
-                            </ul>
+                        <div class="block">
+                            <div class="experience-item">
+                                <h3>Bioinformatics Engineer I</h3>
+                                <p class="date">Elucidata Data Consulting Pvt Ltd | Aug 2022 - Present</p>
+                                <ul>
+                                    <li>Developed RShiny applications and data visualization projects using R and Python programming languages and Shiny libraries for biomedical data analysis and visualization in B2B SaaS products.</li>
+                                    <li>Integrated Spotfire in-built visualizations with custom visualizations from JSViz framework, Spotfire MODS, Plotly.js, RShiny, and JavaScript-based Text Area scripts.</li>
+                                    <li>Utilized Spotfire's data functions and programming capabilities in R and Python for data transformation.</li>
+                                    <li>Created complex SQL queries through custom queries and information links for data ingestion.</li>
+                                    <li>Built a collection of reusable IronPython scripts stored within DXP for streamlined development.</li>
+                                    <li>Worked as a Spotfire developer, creating Spotfire dashboards for biological data using IronPython, R, SQL, Python, JavaScript, HTML, and CSS.</li>
+                                    <li>Successfully contributed to multiple high-visibility projects by developing reports (using Rmarkdown) that facilitated data-driven decision-making for businesses.</li>
+                                    <li>Worked on client-facing projects involving MongoDB, pipeline development, and Docker for efficient data processing and analysis.</li>
+                                    <li>Developed pipelines and Docker containers to streamline deployment and ensure scalability across environments.</li>
+                                </ul>
+                            </div>
+                            <hr class="divider">
+                            <div class="experience-item">
+                                <h3>Biomedical Data Analytics Fellow</h3>
+                                <p class="date">Elucidata Data Consulting Pvt Ltd | Feb 2022 - Jul 2022</p>
+                                <ul>
+                                    <li>Hands-on training in Dockers, Pandas, Python Data-Analysis, R, and R shiny</li>
+                                    <li>Developed a dashboard for easy querying, visualization, and report generation</li>
+                                    <li>Self-paced training through Udemy courses.</li>
+                                    <li>Hands-on training over Dockers, Pandas and Python Data-Analysis, R, R shiny.</li>
+                                    <li>Involved in in-house industrial project based on R language, SQL and the Shiny framework.</li>
+                                    <li>The dashboard developed during the project enables easy querying, allowing users to search, visualise, audit, and
+                                        generate reports for an overview of many facets of datasets using a web-based GUI</li>
+                                </ul>
+                            </div>
+                            <hr class="divider">
+                            <div class="experience-item">
+                                <h3>Subject Matter Expert</h3>
+                                <p class="date">Chegg Inc.  | Mar 2020 - Jul 2022</p>
+                                <ul>
+                                    <li>To answer questions asked by students from globally.</li>
+                                    <li>Follow the quality parameters to solve QnA.</li>
+                                    <li>Ensure that the guidelines of answering are strictly followed.</li>
+                                    <li>To ensure academic integrity.</li>
+                                </ul>
+                            </div>
+                            <hr class="divider">
+                            <div class="experience-item"></div>
+                                <h3>Teaching Assistant and Counsellor</h3>
+                                <p class="date">Enbee Education Center Pvt. Ltd | Nov 2018 - Dec 2019</p>
+                                <ul>
+                                    <li>Train students for SAT, GRE, and TOEFL.</li>
+                                    <li>Advising students on education opportunities, application procedures, visa applications, and other documentation for
+                                        study abroad.</li>
+                                    <li>Liaising with students, other offices, and client institutions.</li>
+                                    <li>Assisting with the general running of the office to ensure smooth operations.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
                     <div id="education" class="tab-content">
                         <div class="block">
-                            <h2>Education</h2>
+                            <!-- <h2>Education</h2> -->
                             <div class="experience-item">
                                 <h3>Master of Science in Bioinformatics</h3>
-                                <p class="date">University of XYZ | 2020 - 2022</p>
+                                <p class="date">Sardar Patel University | 2015 - 2017</p>
                             </div>
+                            <hr class="divider">
                             <div class="experience-item">
-                                <h3>Bachelor of Science in Biology</h3>
-                                <p class="date">University of ABC | 2016 - 2020</p>
+                                <h3>Bachelor of Science in Bioinformatics</h3>
+                                <p class="date">Sardar Patel University | 2012 - 2015</p>
                             </div>
                         </div>
                     </div>
 
                     <div id="projects" class="tab-content">
-                        <div class="project-item">
-                            <h3>Bioinformatics Pipeline Development</h3>
-                            <p class="date">Elucidata | 2022</p>
-                            <p>Developed automated bioinformatics pipelines for data processing, including Docker containerization and cloud deployment strategies.</p>
-                            <a href="https://github.com/yourproject" target="_blank" class="project-link">View Project</a>
+                        <div class="block">
+                            <div class="project-item">
+                                <h3>Interactive Meteorological Insights for Indian States</h3>
+                                <p class="date">Posit Table Contest | 2024</p>
+                                <p>This project presents meteorological data for various Indian states, featuring interactive tables and visualizations using ApexCharts and Toast UI, inspired by the aesthetics of Kung Fu Panda.</p>
+                                <p>
+                                    <a href="https://shinyoo7.quarto.pub/indian-states-meteorological-data/" target="_blank" class="project-link">View Table</a> |
+                                    <a href="https://github.com/PablaOO7/Posit-Table-Contest-2024" target="_blank" class="project-link">View Project</a>
+                                </p>
+                            </div>
+                            <hr class="divider">
+                            <div class="project-item">
+                                <h3>Plotnine: Artistic Potential of Data Visualization</h3>
+                                <p class="date">Plotnine Contest | 2024</p>
+                                <p>A showcase of my three distinct entries in the Plotnine contest, highlighting the versatility of data visualization through artistic expressions and scientific analysis.</p>
+                                <a href="https://github.com/PablaOO7/Plotnine-Contest-2024" target="_blank" class="project-link">View Project</a>
+                            </div>
+                            <hr class="divider">
+                            <div class="project-item">
+                                <h3 class="data">Interactive Shiny Dashboard: Exploring the Star Wars Universe</h3>
+                                <p class="date">Shiny Contest | 2024</p> 
+                                <p>Embark on an intergalactic journey with our interactive Shiny dashboard! Explore key statistics of legendary characters, visualize the balance of the Force, and dive into the rich tapestry of Star Wars communities. This dashboard brings the epic saga to life through engaging data visualization.</p>
+                                <p>
+                                    <a href="https://pabla007.shinyapps.io/posit-shiny-contest-2024/" target="_blank" class="project-link">View App</a> |
+                                    <a href="https://github.com/PablaOO7/Posit-Shiny-Contest-2024" target="_blank" class="project-link">View Project</a>
+                                </p>
+                            </div>                            
                         </div>
                     </div>
 
-                    <div id="talks" class="tab-content">
+                    <div id="certificates" class="tab-content">
                         <div class="block">
-                            <h2>Talks</h2>
+                            <!-- <h2>Certificates</h2> -->
                             <div class="experience-item">
-                                <h3>Advances in Bioinformatics Data Visualization</h3>
-                                <p class="date">Bioinformatics Conference | 2023</p>
-                                <p>Presented recent developments in biomedical data visualization techniques using RShiny and Spotfire at the annual Bioinformatics conference.</p>
+                                <h3>Proteomics Advanced Winter School 2021</h3>
+                                <p class="date">IIT-Bombay | Attended a 3-week workshop</p>
+                                <p>Learned about gel-based, Mass spec-based, Targeted, Quantitative, and data-analysis. In the third week, used tools like MetaboAnalyst, Reactome, and STRING for a project on "Global proteomics analysis of colon cancer vs control samples to understand biological alteration."</p>
+                                <p><a href="https://github.com/PablaOO7/career-canvas/blob/master/iitb_internship_certificate.pdf" target="_blank">View Certificate</a></p>
+                            </div>
+                            <hr class="divider">
+                            <div class="experience-item">
+                                <h3>AI Product Manager Nanodegree</h3>
+                                <p class="date">Udacity | Certificate earned on August 13, 2021</p>
+                                <p><a href="https://www.udacity.com/certificate/M3K4KVGP" target="_blank">View Certificate</a></p>
+                            </div>
+                            <hr class="divider">
+                            <div class="experience-item">
+                                <h3>Data Analyst in Python</h3>
+                                <p class="date">Dataquest | Certificate earned on October 27, 2020</p>
+                            </div>
+                            <hr class="divider">
+                            <div class="experience-item">
+                                <h3>Whole Genome Sequencing of Bacterial Genomes - Tools and Applications</h3>
+                                <p class="date">Technical University of Denmark X Coursera | Certificate earned on January 30, 2020</p>
+                                <p><a href="https://coursera.org/share/7ddc8fc580644af7b8d080595cc24d62" target="_blank">View Certificate</a></p>
+                            </div>
+                            <hr class="divider">
+                            <div class="experience-item">
+                                <h3>Disease Clusters</h3>
+                                <p class="date">Johns Hopkins University X Coursera | Certificate earned on May 17, 2020</p>
+                            </div>
+                            <hr class="divider">
+                            <div class="experience-item">
+                                <h3>Bacterial Genomes: Comparative Genomics Using Artemis Comparison Tool (ACT)</h3>
+                                <p class="date">Wellcome Trust Sanger Institute X FutureLearn | Certificate earned on January 27, 2020</p>
+                                <p><a href="https://www.futurelearn.com/certificates/k0y9ag0" target="_blank">View Certificate</a></p>
                             </div>
                         </div>
                     </div>
