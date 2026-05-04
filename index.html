@@ -3,589 +3,1300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajax Singh Pabla - Computational Biologist</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>Ajax Singh Pabla — Computational Biologist</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Apple/Premium Dark Mode Palette */
-            --bg-color: #000000;
-            --surface-color: #1c1c1e;
-            --surface-hover: #2c2c2e;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --text-primary: #f5f5f7;
-            --text-secondary: #a1a1a6;
-            --accent-color: #0bc5ea; /* Cyan for data/tech feel */
-            --accent-glow: rgba(11, 197, 234, 0.2);
-            --radius-lg: 24px;
-            --radius-md: 16px;
-            --radius-sm: 8px;
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --bg:       #0a0e0f;
+            --bg2:      #111618;
+            --bg3:      #161d1f;
+            --surface:  #1a2224;
+            --surface2: #1f292c;
+            --border:   rgba(78,200,166,0.12);
+            --border2:  rgba(78,200,166,0.22);
+            --teal:     #4ec8a6;
+            --teal2:    #2a9d80;
+            --teal-dim: rgba(78,200,166,0.08);
+            --teal-glow:rgba(78,200,166,0.18);
+            --amber:    #e8a84c;
+            --amber-dim:rgba(232,168,76,0.1);
+            --text:     #e2e8ea;
+            --muted:    #7a9097;
+            --faint:    #3d5258;
+            --font-head: 'DM Serif Display', Georgia, serif;
+            --font-mono: 'DM Mono', monospace;
+            --font-body: 'Outfit', sans-serif;
         }
 
-        /* Accessibility: Reduced Motion */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
-            margin: 0;
-            padding: 2rem 1rem;
-            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        code, .mono {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9em;
-            color: var(--accent-color);
-            background: rgba(11, 197, 234, 0.1);
-            padding: 0.1rem 0.4rem;
-            border-radius: 4px;
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg2); }
+        ::-webkit-scrollbar-thumb { background: var(--teal2); border-radius: 3px; }
+        * { scrollbar-width: thin; scrollbar-color: var(--teal2) var(--bg2); }
+
+        /* ─── NOISE TEXTURE OVERLAY ─── */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 0; opacity: 0.4;
         }
 
-        a {
-            color: var(--accent-color);
-            text-decoration: none;
-            transition: var(--transition);
+        /* ─── GRID LINES ─── */
+        body::after {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none; z-index: 0; opacity: 0.5;
         }
 
-        a:hover {
-            color: #ffffff;
-            text-shadow: 0 0 8px var(--accent-glow);
-        }
-
-        /* Keyboard Accessibility */
-        :focus-visible {
-            outline: 2px solid var(--accent-color);
-            outline-offset: 4px;
-            border-radius: 4px;
-        }
-
-        /* Bento Grid Layout */
-        .bento-container {
-            max-width: 1200px;
+        .wrapper {
+            position: relative; z-index: 1;
+            max-width: 1180px;
             margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: start;
+            padding: 2.5rem 0 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
         }
 
-        @media (min-width: 900px) {
-            .bento-container {
-                grid-template-columns: 300px 1fr;
-                grid-template-areas: 
-                    "profile main"
-                    "info main"
-                    "skills main";
-            }
-            .bento-profile { grid-area: profile; }
-            .bento-info { grid-area: info; }
-            .bento-skills { grid-area: skills; }
-            .bento-main { grid-area: main; }
-        }
+        .hero-left { display: flex; flex-direction: column; gap: 0.75rem; }
 
-        /* Card Styles */
-        .bento-card {
-            background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
-            transition: var(--transition);
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-family: var(--font-mono); font-size: 0.7rem;
+            color: var(--teal); letter-spacing: 0.1em;
+            background: var(--teal-dim);
+            border: 1px solid var(--border2);
+            padding: 0.3rem 0.8rem; border-radius: 2px;
+            width: fit-content;
         }
+        .hero-badge::before { content: '◆'; font-size: 0.5rem; }
 
-        .bento-card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+        .hero-name {
+            font-family: var(--font-head);
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            line-height: 1.05;
+            color: var(--text);
+            letter-spacing: -0.01em;
         }
+        .hero-name em { color: var(--teal); font-style: italic; }
 
-        h1, h2, h3 {
-            margin-top: 0;
-            font-weight: 600;
-        }
-
-        h2 {
-            font-size: 1.25rem;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Hero Profile Section */
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--surface-hover);
-            margin-bottom: 1rem;
-        }
-
-        .tagline {
-            color: var(--text-secondary);
+        .hero-tagline {
             font-size: 0.95rem;
-            margin-bottom: 1.5rem;
+            color: var(--muted);
+            font-weight: 300;
+            letter-spacing: 0.02em;
         }
 
-        .social-links {
-            display: flex;
-            gap: 1rem;
+        #typing-text {
+            color: var(--teal);
+            border-right: 2px solid var(--teal);
+            animation: blink 0.9s step-end infinite;
+            font-family: var(--font-mono); font-size: 0.85rem;
+        }
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        .hero-meta {
+            display: flex; gap: 1.5rem; flex-wrap: wrap;
+            font-family: var(--font-mono); font-size: 0.72rem;
+            color: var(--muted);
+        }
+        .hero-meta span { display: flex; align-items: center; gap: 0.35rem; }
+        .hero-meta a { color: var(--muted); text-decoration: none; }
+        .hero-meta a:hover { color: var(--teal); }
+
+        .hero-actions {
+            display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.25rem;
         }
 
         .btn {
-            display: inline-block;
-            background: var(--surface-hover);
-            color: var(--text-primary);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.9rem;
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-family: var(--font-mono); font-size: 0.72rem;
+            padding: 0.55rem 1.2rem; border-radius: 2px;
+            text-decoration: none; cursor: pointer;
+            transition: all 0.2s; border: none; letter-spacing: 0.06em;
+        }
+        .btn-primary {
+            background: var(--teal); color: var(--bg);
             font-weight: 500;
-            border: 1px solid var(--border-color);
         }
-        
-        .btn:hover {
-            background: var(--text-primary);
-            color: var(--bg-color);
+        .btn-primary:hover { background: #6dd9b7; }
+        .btn-ghost {
+            background: transparent; color: var(--teal);
+            border: 1px solid var(--border2);
         }
+        .btn-ghost:hover { background: var(--teal-dim); color: var(--text); }
 
-        /* Contact & Info Lists */
-        .info-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .info-list li {
-            margin-bottom: 0.75rem;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Gene Expression Skills Heatmap */
-        .heatmap-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 8px;
-        }
-
-        .heatmap-cell {
-            background-color: var(--accent-color);
-            padding: 0.5rem;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #000;
-            transition: var(--transition);
-            cursor: default;
-        }
-
-        /* Simulating expression levels via opacity */
-        .heatmap-cell[data-level="high"] { opacity: 1; }
-        .heatmap-cell[data-level="med"] { opacity: 0.6; }
-        .heatmap-cell[data-level="low"] { opacity: 0.3; }
-
-        .heatmap-cell:hover {
-            opacity: 1;
-            transform: scale(1.05);
-            box-shadow: 0 0 12px var(--accent-glow);
-        }
-
-        /* Apple-style Segmented Controls (Tabs) */
-        .segmented-control {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 0.3rem;
-            border-radius: var(--radius-md);
-            display: flex;
-            gap: 0.2rem;
-            margin-bottom: 2rem;
-            border: 1px solid var(--border-color);
-            overflow-x: auto;
-            scrollbar-width: none; /* Firefox */
-        }
-        
-        .segmented-control::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
-        }
-
-        .tab-btn {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            white-space: nowrap;
-            font-family: inherit;
-        }
-
-        .tab-btn[aria-selected="true"] {
-            background: var(--surface-hover);
-            color: var(--text-primary);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        .tab-btn:hover:not([aria-selected="true"]) {
-            color: var(--text-primary);
-            background: rgba(255,255,255,0.05);
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-
-        .tab-content.active {
+        /* ─── DNA CANVAS ─── */
+        .hero-right { position: relative; }
+        #dna-canvas {
+            width: 110px; height: 220px;
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Phylogenetic Timeline (Experience) */
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-            border-left: 2px solid var(--surface-hover);
-            margin-left: 1rem;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2.5rem;
-        }
-
-        /* Node/Branch point */
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2.35rem; /* Aligns with the main border */
-            top: 0.25rem;
-            width: 12px;
-            height: 12px;
-            background: var(--bg-color);
-            border: 2px solid var(--accent-color);
-            border-radius: 50%;
-            transition: var(--transition);
-        }
-
-        .timeline-item:hover::before {
-            background: var(--accent-color);
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        .timeline-date {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--accent-color);
-            margin-bottom: 0.25rem;
-        }
-
-        .timeline-title {
-            font-size: 1.1rem;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .timeline-subtitle {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .timeline-details {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .timeline-details li {
-            position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-        }
-
-        .timeline-details li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
-            color: var(--surface-hover);
-        }
-
-        /* Project Cards inside Tabs */
-        .project-grid {
+        /* ─── MAIN LAYOUT ─── */
+        .layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: 280px 1fr;
             gap: 1.5rem;
+            align-items: start;
         }
 
-        .project-card {
-            background: rgba(0,0,0,0.2);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
+        /* ─── SIDEBAR ─── */
+        .sidebar { display: flex; flex-direction: column; gap: 1rem; }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
         }
 
-        .project-card:hover {
-            border-color: var(--accent-color);
-            background: rgba(11, 197, 234, 0.02);
+        .card-head {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.65rem 1rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface2);
+        }
+        .card-head h2 {
+            font-family: var(--font-mono); font-size: 0.68rem;
+            letter-spacing: 0.12em; color: var(--teal);
+            font-weight: 500; text-transform: uppercase;
+        }
+        .card-head-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--teal); flex-shrink: 0;
+        }
+        .card-body { padding: 1rem; }
+
+        /* HEX AVATAR */
+        .hex-avatar {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 0.75rem;
+            padding: 1.25rem 1rem;
+        }
+        .hex-wrap { position: relative; }
+        .hex-wrap svg { display: block; }
+
+        /* ABOUT */
+        .about-row {
+            display: flex; align-items: center; gap: 0.6rem;
+            padding: 0.4rem 0;
+            font-size: 0.82rem; color: var(--muted);
+            border-bottom: 1px solid var(--border);
+        }
+        .about-row:last-child { border-bottom: none; }
+        .about-icon { color: var(--teal); font-size: 0.9rem; flex-shrink: 0; width: 16px; text-align: center; }
+        .about-row a { color: var(--muted); text-decoration: none; }
+        .about-row a:hover { color: var(--teal); }
+
+        /* SKILLS RADIAL */
+        .skills-wrap { padding: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        .skill-item { display: flex; flex-direction: column; gap: 0.3rem; }
+        .skill-label {
+            display: flex; justify-content: space-between;
+            font-family: var(--font-mono); font-size: 0.7rem;
+            color: var(--muted);
+        }
+        .skill-label span:last-child { color: var(--faint); }
+        .skill-track {
+            height: 3px; background: var(--surface2);
+            border-radius: 2px; overflow: hidden;
+        }
+        .skill-fill {
+            height: 100%; border-radius: 2px;
+            background: linear-gradient(90deg, var(--teal2), var(--teal));
+            transform-origin: left;
+            animation: fillBar 1.2s cubic-bezier(.16,1,.3,1) both;
+        }
+        @keyframes fillBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.25rem 0; }
+        .stag {
+            font-family: var(--font-mono); font-size: 0.65rem;
+            padding: 0.2rem 0.55rem; border-radius: 2px;
+            background: var(--surface2); color: var(--muted);
+            border: 1px solid var(--border);
         }
 
-        .project-card h3 {
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+        /* LANGS */
+        .lang-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.4rem 0; font-size: 0.82rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .lang-row:last-child { border-bottom: none; }
+        .lang-level {
+            font-family: var(--font-mono); font-size: 0.65rem;
+            color: var(--teal); background: var(--teal-dim);
+            padding: 0.15rem 0.5rem; border-radius: 2px;
         }
 
-        .project-card p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            flex-grow: 1;
+        /* SOCIALS */
+        .social-link {
+            display: flex; align-items: center; gap: 0.6rem;
+            padding: 0.55rem 0.75rem; border-radius: 3px;
+            color: var(--muted); text-decoration: none; font-size: 0.82rem;
+            transition: all 0.2s; margin-bottom: 0.3rem;
+            border: 1px solid transparent;
+        }
+        .social-link:hover {
+            background: var(--teal-dim); color: var(--teal);
+            border-color: var(--border2);
+        }
+        .social-icon { font-size: 1rem; }
+
+        /* WORD MAZE */
+        .maze-wrap { padding: 0.75rem; }
+        .maze-title {
+            font-family: var(--font-mono); font-size: 0.65rem;
+            color: var(--faint); letter-spacing: 0.08em;
+            margin-bottom: 0.6rem; text-align: center;
+        }
+        #maze-grid {
+            display: grid;
+            grid-template-columns: repeat(14, 1fr);
+            gap: 2px;
+            font-family: var(--font-mono); font-size: 0.62rem;
+            user-select: none;
+        }
+        .mc {
+            display: flex; align-items: center; justify-content: center;
+            aspect-ratio: 1; border-radius: 2px;
+            cursor: pointer; color: var(--faint);
+            transition: all 0.15s; font-weight: 500;
+        }
+        .mc:hover { color: var(--text); background: var(--surface2); }
+        .mc.word-cell { color: var(--bg2); background: var(--teal); font-weight: 600; }
+        .mc.word-cell.found { background: var(--amber); color: var(--bg); }
+        .mc.selected { background: var(--teal-glow); color: var(--teal); }
+
+        .maze-words {
+            display: flex; flex-wrap: wrap; gap: 0.35rem;
+            margin-top: 0.75rem;
+        }
+        .maze-word {
+            font-family: var(--font-mono); font-size: 0.6rem;
+            padding: 0.15rem 0.5rem; border-radius: 2px;
+            border: 1px solid var(--border);
+            color: var(--muted); transition: all 0.3s; cursor: default;
+        }
+        .maze-word.found-word {
+            background: var(--amber-dim); color: var(--amber);
+            border-color: var(--amber); text-decoration: line-through;
+        }
+        .maze-hint {
+            font-family: var(--font-mono); font-size: 0.6rem;
+            color: var(--faint); text-align: center; margin-top: 0.5rem;
+        }
+        #maze-msg {
+            font-family: var(--font-mono); font-size: 0.65rem;
+            color: var(--teal); text-align: center; margin-top: 0.4rem;
+            min-height: 1em;
         }
 
-        .project-links {
-            margin-top: 1.5rem;
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+        /* ─── MAIN CONTENT ─── */
+        .main { display: flex; flex-direction: column; gap: 1rem; }
+
+        /* TABS */
+        .tabs-nav {
+            display: flex; flex-wrap: wrap; gap: 0;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 4px; overflow: hidden;
+            font-family: var(--font-mono); font-size: 0.72rem;
         }
+        .tab-btn {
+            flex: 1; min-width: 100px;
+            padding: 0.75rem 1rem; text-align: center;
+            background: none; border: none; color: var(--muted);
+            cursor: pointer; transition: all 0.2s;
+            letter-spacing: 0.06em; font-family: var(--font-mono);
+            font-size: 0.72rem; border-right: 1px solid var(--border);
+            position: relative;
+        }
+        .tab-btn:last-child { border-right: none; }
+        .tab-btn::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+            height: 2px; background: var(--teal); transform: scaleX(0);
+            transition: transform 0.2s;
+        }
+        .tab-btn.active { color: var(--teal); background: var(--teal-dim); }
+        .tab-btn.active::after { transform: scaleX(1); }
+        .tab-btn:hover:not(.active) { color: var(--text); background: var(--surface2); }
+
+        .tab-pane { display: none; }
+        .tab-pane.active { display: flex; flex-direction: column; gap: 0.75rem; }
+
+        /* WORK/EDU ITEMS */
+        .work-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 4px; overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .work-card:hover { border-color: var(--border2); }
+
+        .work-card-head {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 0.75rem; align-items: start;
+            padding: 1rem 1.1rem 0.75rem;
+        }
+        .work-num {
+            font-family: var(--font-mono); font-size: 0.65rem;
+            color: var(--faint); padding-top: 0.15rem;
+        }
+        .work-role {
+            font-size: 0.95rem; font-weight: 600; color: var(--text);
+            line-height: 1.3; margin-bottom: 0.2rem;
+        }
+        .work-org {
+            font-family: var(--font-mono); font-size: 0.72rem;
+            color: var(--teal);
+        }
+        .work-date {
+            font-family: var(--font-mono); font-size: 0.65rem;
+            color: var(--faint); white-space: nowrap; text-align: right;
+            padding-top: 0.15rem;
+        }
+
+        .work-body {
+            padding: 0 1.1rem 1rem 2.7rem;
+        }
+        .work-body ul {
+            list-style: none; display: flex; flex-direction: column; gap: 0.4rem;
+        }
+        .work-body ul li {
+            font-size: 0.82rem; color: var(--muted); line-height: 1.55;
+            padding-left: 1rem; position: relative;
+        }
+        .work-body ul li::before {
+            content: '▸'; position: absolute; left: 0;
+            color: var(--teal); font-size: 0.65rem; top: 0.15rem;
+        }
+        .work-body code {
+            font-family: var(--font-mono); font-size: 0.72rem;
+            background: var(--teal-dim); color: var(--teal);
+            padding: 0.05rem 0.35rem; border-radius: 2px;
+        }
+        .work-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
+        .wtag {
+            font-family: var(--font-mono); font-size: 0.62rem;
+            padding: 0.15rem 0.5rem; border-radius: 2px;
+            background: var(--surface2); color: var(--faint);
+            border: 1px solid var(--border);
+        }
+
+        /* PROJECTS */
+        .proj-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 4px; padding: 1rem 1.1rem;
+            transition: border-color 0.2s;
+        }
+        .proj-card:hover { border-color: var(--border2); }
+        .proj-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+        .proj-title { font-size: 0.92rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+        .proj-date {
+            font-family: var(--font-mono); font-size: 0.65rem;
+            color: var(--amber); background: var(--amber-dim);
+            padding: 0.2rem 0.5rem; border-radius: 2px; white-space: nowrap;
+            border: 1px solid rgba(232,168,76,0.2); flex-shrink: 0;
+        }
+        .proj-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.55; margin: 0.5rem 0 0.75rem; }
+        .proj-links { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .proj-link {
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            font-family: var(--font-mono); font-size: 0.65rem;
+            padding: 0.3rem 0.65rem; border-radius: 2px;
+            background: var(--teal-dim); color: var(--teal);
+            border: 1px solid var(--border2); text-decoration: none;
+            transition: all 0.2s; letter-spacing: 0.04em;
+        }
+        .proj-link:hover { background: var(--teal); color: var(--bg); }
+        .proj-award {
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            font-family: var(--font-mono); font-size: 0.65rem;
+            color: var(--amber); background: var(--amber-dim);
+            border: 1px solid rgba(232,168,76,0.25);
+            padding: 0.2rem 0.6rem; border-radius: 2px; margin-bottom: 0.4rem;
+        }
+
+        /* CERTS */
+        .cert-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 4px; padding: 0.85rem 1.1rem;
+            transition: border-color 0.2s;
+        }
+        .cert-card:hover { border-color: var(--border2); }
+        .cert-title { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+        .cert-issuer {
+            font-family: var(--font-mono); font-size: 0.68rem;
+            color: var(--teal); margin-bottom: 0.4rem;
+        }
+        .cert-desc { font-size: 0.79rem; color: var(--muted); line-height: 1.5; margin-bottom: 0.5rem; }
+        .cert-link {
+            font-family: var(--font-mono); font-size: 0.65rem;
+            color: var(--teal); text-decoration: none;
+            border-bottom: 1px solid var(--border2); padding-bottom: 1px;
+        }
+        .cert-link:hover { color: var(--text); }
+
+        /* FOOTER */
+        .footer {
+            margin-top: 2.5rem; padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 0.5rem;
+        }
+        .footer-left { font-family: var(--font-mono); font-size: 0.65rem; color: var(--faint); }
+        .footer-right { font-family: var(--font-mono); font-size: 0.65rem; color: var(--faint); }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .layout { grid-template-columns: 1fr; }
+            .hero { grid-template-columns: 1fr; }
+            .hero-right { display: none; }
+            #maze-grid { grid-template-columns: repeat(10, 1fr); }
+        }
+
+        /* SECTION LABEL */
+        .sec-label {
+            font-family: var(--font-mono); font-size: 0.65rem;
+            letter-spacing: 0.14em; color: var(--faint);
+            text-transform: uppercase; margin-bottom: 0.5rem;
+        }
+
+        /* EDUCATION TIMELINE */
+        .edu-item {
+            display: flex; gap: 1rem;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 4px; padding: 1rem 1.1rem;
+        }
+        .edu-line {
+            display: flex; flex-direction: column; align-items: center; gap: 0;
+            flex-shrink: 0; padding-top: 0.3rem;
+        }
+        .edu-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            border: 2px solid var(--teal); background: var(--bg);
+            flex-shrink: 0;
+        }
+        .edu-dash { flex: 1; width: 1px; background: var(--border); min-height: 20px; }
+        .edu-degree { font-size: 0.92rem; font-weight: 600; color: var(--text); }
+        .edu-school { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal); margin: 0.2rem 0; }
+        .edu-year { font-family: var(--font-mono); font-size: 0.65rem; color: var(--faint); }
     </style>
 </head>
 <body>
+<div class="wrapper">
 
-    <main class="bento-container">
-        
-        <!-- Profile Hero Card -->
-        <article class="bento-card bento-profile">
-            <img src="https://raw.githubusercontent.com/PablaOO7/career-canvas/refs/heads/master/profile_pic.jpg" alt="Portrait of Ajax Singh Pabla" class="profile-pic">
-            <h1>Ajax Singh Pabla</h1>
-            <p class="tagline">Translating complex biological data into actionable insights through robust pipelines and elegant visualizations.</p>
-            <div class="social-links">
-                <a href="https://github.com/PablaOO7" target="_blank" class="btn" aria-label="Visit my GitHub profile">GitHub</a>
-                <a href="mailto:pablaAjax94@gmail.com" class="btn" aria-label="Send me an email">Email Me</a>
+    <!-- ── HERO ── -->
+    <header class="hero">
+        <div class="hero-left">
+            <div class="hero-badge">COMPUTATIONAL BIOLOGIST · INDIA</div>
+            <h1 class="hero-name">Ajax<br><em>Singh Pabla</em></h1>
+            <p class="hero-tagline">R Shiny Developer · Data Visualization Engineer</p>
+            <p style="font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);min-height:1.4em">
+                <span id="typing-text"></span>
+            </p>
+            <div class="hero-meta">
+                <span>📧 <a href="mailto:pablaAjax94@gmail.com">pablaAjax94@gmail.com</a></span>
+                <span>📍 India</span>
+                <span>🐙 <a href="https://github.com/PablaOO7" target="_blank">PablaOO7</a></span>
             </div>
-        </article>
-
-        <!-- Quick Info Card -->
-        <article class="bento-card bento-info">
-            <h2><span aria-hidden="true">📍</span> Core Info</h2>
-            <ul class="info-list">
-                <li><strong>Role:</strong> Comp. Biologist & R Shiny Dev</li>
-                <li><strong>Location:</strong> India</li>
-                <li><strong>Languages:</strong> English, Hindi, Punjabi</li>
-            </ul>
-        </article>
-
-        <!-- Gene Expression Skills Heatmap -->
-        <article class="bento-card bento-skills">
-            <h2><span aria-hidden="true">🧬</span> Skills Expression</h2>
-            <div class="heatmap-grid" aria-label="A heatmap of technical skills based on proficiency">
-                <!-- Data levels: high, med, low dictating opacity -->
-                <div class="heatmap-cell" data-level="high" aria-label="Highly proficient in R">R / Shiny</div>
-                <div class="heatmap-cell" data-level="high" aria-label="Highly proficient in Python">Python</div>
-                <div class="heatmap-cell" data-level="high" aria-label="Highly proficient in SQL">SQL</div>
-                <div class="heatmap-cell" data-level="med" aria-label="Proficient in Nextflow">Nextflow</div>
-                <div class="heatmap-cell" data-level="med" aria-label="Proficient in Docker">Docker</div>
-                <div class="heatmap-cell" data-level="med" aria-label="Proficient in Machine Learning">ML / LLM</div>
-                <div class="heatmap-cell" data-level="high" aria-label="Highly proficient in Data Visualization">Data Viz</div>
-                <div class="heatmap-cell" data-level="low" aria-label="Familiar with JavaScript">JavaScript</div>
-                <div class="heatmap-cell" data-level="high" aria-label="Highly proficient in ScRNA-Seq">ScRNA-Seq</div>
-                <div class="heatmap-cell" data-level="med" aria-label="Proficient in Cloud APIs">Cloud APIs</div>
+            <div class="hero-actions">
+                <a href="https://github.com/PablaOO7/career-canvas" target="_blank" class="btn btn-primary">↗ GitHub CV Repo</a>
+                <a href="https://github.com/PablaOO7" target="_blank" class="btn btn-ghost">⌥ GitHub Profile</a>
             </div>
-        </article>
+        </div>
+        <div class="hero-right">
+            <canvas id="dna-canvas" width="110" height="220"></canvas>
+        </div>
+    </header>
 
-        <!-- Main Content Area (Tabs) -->
-        <article class="bento-card bento-main">
-            
-            <nav class="segmented-control" role="tablist" aria-label="Resume Sections">
-                <button class="tab-btn" role="tab" aria-selected="true" aria-controls="work" id="tab-work">Experience</button>
-                <button class="tab-btn" role="tab" aria-selected="false" aria-controls="projects" id="tab-projects">Projects & Talks</button>
-                <button class="tab-btn" role="tab" aria-selected="false" aria-controls="education" id="tab-education">Education</button>
-                <button class="tab-btn" role="tab" aria-selected="false" aria-controls="certificates" id="tab-certificates">Certificates</button>
+    <!-- ── LAYOUT ── -->
+    <div class="layout">
+
+        <!-- ── SIDEBAR ── -->
+        <aside class="sidebar">
+
+            <!-- HEX AVATAR -->
+            <div class="card">
+                <div class="hex-avatar">
+                    <svg width="100" height="112" viewBox="0 0 100 112">
+                        <defs>
+                            <clipPath id="hexClip">
+                                <polygon points="50,4 94,28 94,76 50,100 6,76 6,28"/>
+                            </clipPath>
+                            <linearGradient id="hexGrad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#0a1f1c"/>
+                                <stop offset="100%" stop-color="#0d2b26"/>
+                            </linearGradient>
+                        </defs>
+                        <polygon points="50,4 94,28 94,76 50,100 6,76 6,28"
+                            fill="url(#hexGrad)" stroke="#4ec8a6" stroke-width="1.5"/>
+                        <image href="https://raw.githubusercontent.com/PablaOO7/career-canvas/refs/heads/master/profile_pic.jpg"
+                            x="6" y="4" width="88" height="96" clip-path="url(#hexClip)"
+                            preserveAspectRatio="xMidYMid slice"/>
+                        <!-- scan line overlay -->
+                        <polygon points="50,4 94,28 94,76 50,100 6,76 6,28"
+                            fill="none" stroke="#4ec8a6" stroke-width="1.5" opacity="0.6"/>
+                    </svg>
+                    <div style="text-align:center">
+                        <div style="font-family:var(--font-head);font-size:1.1rem;color:var(--text)">Ajax Singh Pabla</div>
+                        <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--teal);margin-top:0.2rem">Senior Scientific Analyst II</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABOUT -->
+            <div class="card">
+                <div class="card-head"><div class="card-head-dot"></div><h2>About</h2></div>
+                <div class="card-body" style="padding:0.5rem 1rem;">
+                    <div class="about-row"><span class="about-icon">📧</span> <a href="mailto:pablaAjax94@gmail.com">pablaAjax94@gmail.com</a></div>
+                    <div class="about-row"><span class="about-icon">📍</span> India</div>
+                    <div class="about-row"><span class="about-icon">🐙</span> <a href="https://github.com/PablaOO7" target="_blank">github.com/PablaOO7</a></div>
+                </div>
+            </div>
+
+            <!-- SKILLS -->
+            <div class="card">
+                <div class="card-head"><div class="card-head-dot"></div><h2>Core Skills</h2></div>
+                <div class="card-body skills-wrap">
+                    <div class="skill-item">
+                        <div class="skill-label"><span>R / Bioconductor</span><span>●●●●●</span></div>
+                        <div class="skill-track"><div class="skill-fill" style="width:94%;animation-delay:0.1s"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-label"><span>Python / Biopython</span><span>●●●●○</span></div>
+                        <div class="skill-track"><div class="skill-fill" style="width:82%;animation-delay:0.2s"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-label"><span>R Shiny / Streamlit</span><span>●●●●●</span></div>
+                        <div class="skill-track"><div class="skill-fill" style="width:91%;animation-delay:0.3s"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-label"><span>scRNA-seq / omics</span><span>●●●●○</span></div>
+                        <div class="skill-track"><div class="skill-fill" style="width:80%;animation-delay:0.4s"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-label"><span>SQL (PostgreSQL/MySQL)</span><span>●●●●○</span></div>
+                        <div class="skill-track"><div class="skill-fill" style="width:79%;animation-delay:0.5s"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-label"><span>Docker / CI pipelines</span><span>●●●○○</span></div>
+                        <div class="skill-track"><div class="skill-fill" style="width:70%;animation-delay:0.6s"></div></div>
+                    </div>
+                    <div style="margin-top:0.5rem">
+                        <div class="skill-label" style="margin-bottom:0.4rem"><span>Tools & Platforms</span></div>
+                        <div class="skill-tags">
+                            <span class="stag">Spotfire</span><span class="stag">Power BI</span>
+                            <span class="stag">QuickSight</span><span class="stag">Seurat</span>
+                            <span class="stag">Geneformer</span><span class="stag">MongoDB</span>
+                            <span class="stag">JIRA</span><span class="stag">LLM/ML</span>
+                            <span class="stag">Quarto</span><span class="stag">Plotnine</span>
+                            <span class="stag">JavaScript</span><span class="stag">Perl</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LANGUAGES -->
+            <div class="card">
+                <div class="card-head"><div class="card-head-dot"></div><h2>Languages</h2></div>
+                <div class="card-body" style="padding:0.5rem 1rem">
+                    <div class="lang-row"><span>English</span><span class="lang-level">Fluent</span></div>
+                    <div class="lang-row"><span>Hindi</span><span class="lang-level">Fluent</span></div>
+                    <div class="lang-row"><span>Punjabi</span><span class="lang-level">Native</span></div>
+                </div>
+            </div>
+
+            <!-- SOCIALS -->
+            <div class="card">
+                <div class="card-head"><div class="card-head-dot"></div><h2>Socials</h2></div>
+                <div class="card-body" style="padding:0.5rem 0.75rem">
+                    <a href="https://github.com/PablaOO7" target="_blank" class="social-link">
+                        <span class="social-icon">🐙</span> github.com/PablaOO7
+                    </a>
+                    <a href="https://shinyoo7.quarto.pub/indian-states-meteorological-data/" target="_blank" class="social-link">
+                        <span class="social-icon">📊</span> Quarto Portfolio
+                    </a>
+                    <a href="https://discuss.streamlit.io/t/the-30-days-of-ai-challenge-starts-today/120455" target="_blank" class="social-link">
+                        <span class="social-icon">🧬</span> Streamlit Community
+                    </a>
+                </div>
+            </div>
+
+            <!-- WORD MAZE -->
+            <div class="card">
+                <div class="card-head"><div class="card-head-dot"></div><h2>About Ajax · Word Maze</h2></div>
+                <div class="maze-wrap">
+                    <div class="maze-title">Find words that describe me ↓</div>
+                    <div id="maze-grid"></div>
+                    <div class="maze-words" id="maze-wordlist"></div>
+                    <div id="maze-msg"></div>
+                    <div class="maze-hint">click a letter → drag to select</div>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- ── MAIN ── -->
+        <main class="main">
+
+            <!-- TABS NAV -->
+            <nav class="tabs-nav">
+                <button class="tab-btn active" data-tab="work">01 · Work</button>
+                <button class="tab-btn" data-tab="education">02 · Education</button>
+                <button class="tab-btn" data-tab="projects">03 · Projects & Talks</button>
+                <button class="tab-btn" data-tab="certificates">04 · Certificates</button>
             </nav>
 
-            <!-- WORK TAB -->
-            <section id="work" class="tab-content active" role="tabpanel" aria-labelledby="tab-work">
-                <div class="timeline">
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-date">Jan 2025 - Present</div>
-                        <h3 class="timeline-title">Senior Scientific Analyst II</h3>
-                        <div class="timeline-subtitle">Excelra Knowledge Solutions Pvt Ltd</div>
-                        <ul class="timeline-details">
-                            <li>Built end-to-end multi-omics analysis pipelines across bulk RNA-seq, scRNA-seq, GWAS and proteomic datasets.</li>
-                            <li>Applied <code>Geneformer</code> transformer model (~30M single-cell transcriptomes) and <code>Cytetype</code> for AI-assisted automated cell type annotation.</li>
-                            <li>Designed and deployed a production-ready <code>Streamlit</code> application with <code>OpenSearch API</code> integration and adaptive metadata filtering.</li>
-                            <li>Developed automated data acquisition pipelines integrating <code>Qiagen OmicsLand API</code>, GEO and S3 buckets.</li>
-                        </ul>
-                    </div>
+            <!-- ── WORK ── -->
+            <div id="tab-work" class="tab-pane active">
 
-                    <div class="timeline-item">
-                        <div class="timeline-date">Aug 2022 - Dec 2024</div>
-                        <h3 class="timeline-title">Bioinformatics Engineer I</h3>
-                        <div class="timeline-subtitle">Elucidata Data Consulting Pvt Ltd</div>
-                        <ul class="timeline-details">
-                            <li>Developed RShiny applications and data visualization projects for biomedical data analysis in B2B SaaS products.</li>
-                            <li>Integrated Spotfire in-built visualizations with custom JSViz framework, Plotly.js, and RShiny.</li>
+                <div class="work-card">
+                    <div class="work-card-head">
+                        <div class="work-num">01</div>
+                        <div>
+                            <div class="work-role">Senior Scientific Analyst II</div>
+                            <div class="work-org">Excelra Knowledge Solutions Pvt Ltd</div>
+                        </div>
+                        <div class="work-date">Jan 2025 – Present</div>
+                    </div>
+                    <div class="work-body">
+                        <ul>
+                            <li>Built end-to-end multi-omics analysis pipelines across bulk RNA-seq, scRNA-seq, GWAS and proteomic datasets — including Seurat batch integration, UMAP visualization, differential expression analysis and functional annotation across disease indications.</li>
+                            <li>Applied <code>Geneformer</code> transformer-based foundation model (~30M single-cell transcriptomes) and <code>Cytetype</code> for AI-assisted automated cell type annotation and 256-dim UMAP-based classification.</li>
+                            <li>Delivered publication-quality visualizations — Heatmaps, oncoplots, bar/box/scatter/density/PCA plots — using modular, reusable R and Python scripts.</li>
+                            <li>Designed and deployed a production-ready <code>Streamlit</code> application with <code>OpenSearch API</code> integration, ontology-based search with synonym support, adaptive metadata filtering, pagination and one-click dataset download.</li>
+                            <li>Developed automated data acquisition pipelines integrating <code>Qiagen OmicsLand API</code>, GEO and S3 bucket downloads with metadata schema extraction and preprocessing workflows.</li>
+                            <li>Worked on R Shiny applications for biomedical data workflows, focusing on session handling, user tracking and streamlined deployment using <code>renv</code> environments.</li>
+                            <li>Designed modular SQL workflows across <code>PostgreSQL</code> and <code>MySQL</code> — query optimization via temporary tables, JOIN restructuring and data collapsing on large-scale database handling.</li>
+                            <li>Performed data scouting and curation across rare disease indications from public biomedical sources including <code>NCBI GEO</code>, <code>ArrayExpress</code>, PRIDE and metabolomics databases.</li>
+                            <li>Maintained reproducible, containerized analysis environments using <code>Docker</code>, <code>renv</code> and virtual environments with version-controlled pipelines.</li>
+                        </ul>
+                        <div class="work-tags">
+                            <span class="wtag">scRNA-seq</span><span class="wtag">Geneformer</span>
+                            <span class="wtag">Streamlit</span><span class="wtag">OpenSearch</span>
+                            <span class="wtag">R Shiny</span><span class="wtag">PostgreSQL</span>
+                            <span class="wtag">Docker</span><span class="wtag">NCBI GEO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="work-card">
+                    <div class="work-card-head">
+                        <div class="work-num">02</div>
+                        <div>
+                            <div class="work-role">Bioinformatics Engineer I</div>
+                            <div class="work-org">Elucidata Data Consulting Pvt Ltd</div>
+                        </div>
+                        <div class="work-date">Aug 2022 – Dec 2024</div>
+                    </div>
+                    <div class="work-body">
+                        <ul>
+                            <li>Developed RShiny applications and data visualization projects using R and Python programming languages and Shiny libraries for biomedical data analysis and visualization in B2B SaaS products.</li>
+                            <li>Integrated Spotfire in-built visualizations with custom visualizations from JSViz framework, Spotfire MODS, Plotly.js, RShiny, and JavaScript-based Text Area scripts.</li>
+                            <li>Utilized Spotfire's data functions and programming capabilities in R and Python for data transformation.</li>
+                            <li>Created complex SQL queries through custom queries and information links for data ingestion.</li>
                             <li>Built a collection of reusable IronPython scripts stored within DXP for streamlined development.</li>
-                            <li>Developed pipelines and <code>Docker</code> containers to streamline deployment and ensure scalability.</li>
+                            <li>Worked as a Spotfire developer, creating Spotfire dashboards for biological data using IronPython, R, SQL, Python, JavaScript, HTML, and CSS.</li>
+                            <li>Successfully contributed to multiple high-visibility projects by developing reports (using Rmarkdown) that facilitated data-driven decision-making for businesses.</li>
+                            <li>Worked on client-facing projects involving MongoDB, pipeline development, and Docker for efficient data processing and analysis.</li>
+                            <li>Developed pipelines and Docker containers to streamline deployment and ensure scalability across environments.</li>
                         </ul>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-date">Feb 2022 - Jul 2022</div>
-                        <h3 class="timeline-title">Biomedical Data Analytics Fellow</h3>
-                        <div class="timeline-subtitle">Elucidata Data Consulting Pvt Ltd</div>
-                        <ul class="timeline-details">
-                            <li>Developed a dashboard for easy querying, visualization, and report generation using R, SQL, and the Shiny framework.</li>
-                        </ul>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- PROJECTS TAB -->
-            <section id="projects" class="tab-content" role="tabpanel" aria-labelledby="tab-projects" hidden>
-                <div class="project-grid">
-                    
-                    <div class="project-card">
-                        <div class="timeline-date">2025</div>
-                        <h3>The Geometry Chronicles</h3>
-                        <p>A collection of generative-art animations created using Plotnine, exploring the intersection of data visualization and creative coding. <strong>(Runner-Up)</strong></p>
-                        <div class="project-links">
-                            <a href="https://posit.co/blog/winner-of-the-2025-plotnine-plotting-contest/" class="btn" target="_blank">Result</a>
-                            <a href="https://github.com/PablaOO7/Plotnine-Contest-2025" class="btn" target="_blank">Code</a>
+                        <div class="work-tags">
+                            <span class="wtag">R Shiny</span><span class="wtag">Spotfire</span>
+                            <span class="wtag">IronPython</span><span class="wtag">MongoDB</span>
+                            <span class="wtag">Plotly.js</span><span class="wtag">Rmarkdown</span>
+                            <span class="wtag">Docker</span>
                         </div>
                     </div>
-
-                    <div class="project-card">
-                        <div class="timeline-date">2025</div>
-                        <h3>Reports with Quarto</h3>
-                        <p>Talk at R/Pharma Conference on building dynamic and reproducible reports using Quarto, combining R and Python, and incorporating scrollytelling techniques.</p>
-                        <div class="project-links">
-                            <a href="https://www.youtube.com/watch?v=_9_gjYm-tW4&list=PLe44BG0Qk9XWHDJUljUeYIhtt3Aq12qI8" class="btn" target="_blank">Watch Video</a>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="timeline-date">2024</div>
-                        <h3>Exploring the Star Wars Universe</h3>
-                        <p>Interactive Shiny dashboard exploring key statistics of legendary characters and the balance of the Force.</p>
-                        <div class="project-links">
-                            <a href="https://pabla007.shinyapps.io/posit-shiny-contest-2024/" class="btn" target="_blank">Live App</a>
-                            <a href="https://github.com/PablaOO7/Posit-Shiny-Contest-2024" class="btn" target="_blank">Code</a>
-                        </div>
-                    </div>
-
                 </div>
-            </section>
 
-            <!-- EDUCATION TAB -->
-            <section id="education" class="tab-content" role="tabpanel" aria-labelledby="tab-education" hidden>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">2015 - 2017</div>
-                        <h3 class="timeline-title">Master of Science in Bioinformatics</h3>
-                        <div class="timeline-subtitle">Sardar Patel University</div>
+                <div class="work-card">
+                    <div class="work-card-head">
+                        <div class="work-num">03</div>
+                        <div>
+                            <div class="work-role">Biomedical Data Analytics Fellow</div>
+                            <div class="work-org">Elucidata Data Consulting Pvt Ltd</div>
+                        </div>
+                        <div class="work-date">Feb 2022 – Jul 2022</div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">2012 - 2015</div>
-                        <h3 class="timeline-title">Bachelor of Science in Bioinformatics</h3>
-                        <div class="timeline-subtitle">Sardar Patel University</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- CERTIFICATES TAB -->
-            <section id="certificates" class="tab-content" role="tabpanel" aria-labelledby="tab-certificates" hidden>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">Winter 2021</div>
-                        <h3 class="timeline-title">Proteomics Advanced Winter School</h3>
-                        <div class="timeline-subtitle">IIT-Bombay</div>
-                        <ul class="timeline-details">
-                            <li>Analyzed global proteomics data of colon cancer vs control samples using MetaboAnalyst, Reactome, and STRING.</li>
+                    <div class="work-body">
+                        <ul>
+                            <li>Hands-on training in Dockers, Pandas, Python Data-Analysis, R, and R Shiny.</li>
+                            <li>Developed a dashboard for easy querying, visualization, and report generation.</li>
+                            <li>Self-paced training through Udemy courses.</li>
+                            <li>Involved in in-house industrial project based on R language, SQL and the Shiny framework.</li>
+                            <li>The dashboard developed enables easy querying, allowing users to search, visualise, audit, and generate reports for an overview of many facets of datasets using a web-based GUI.</li>
                         </ul>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Aug 2021</div>
-                        <h3 class="timeline-title">AI Product Manager Nanodegree</h3>
-                        <div class="timeline-subtitle">Udacity</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Dec 2020</div>
-                        <h3 class="timeline-title">BioCurator Volunteer</h3>
-                        <div class="timeline-subtitle">BdataA/IBAB</div>
+                        <div class="work-tags">
+                            <span class="wtag">R Shiny</span><span class="wtag">Python</span>
+                            <span class="wtag">SQL</span><span class="wtag">Docker</span>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-        </article>
+                <div class="work-card">
+                    <div class="work-card-head">
+                        <div class="work-num">04</div>
+                        <div>
+                            <div class="work-role">Subject Matter Expert</div>
+                            <div class="work-org">Chegg Inc.</div>
+                        </div>
+                        <div class="work-date">Mar 2020 – Jul 2022</div>
+                    </div>
+                    <div class="work-body">
+                        <ul>
+                            <li>Answered questions asked by students globally across biology and bioinformatics domains.</li>
+                            <li>Followed quality parameters to solve Q&amp;A with academic integrity.</li>
+                            <li>Ensured that the guidelines of answering are strictly followed.</li>
+                        </ul>
+                        <div class="work-tags"><span class="wtag">Biology</span><span class="wtag">Education</span></div>
+                    </div>
+                </div>
 
-    </main>
+                <div class="work-card">
+                    <div class="work-card-head">
+                        <div class="work-num">05</div>
+                        <div>
+                            <div class="work-role">Teaching Assistant and Counsellor</div>
+                            <div class="work-org">Enbee Education Center Pvt. Ltd</div>
+                        </div>
+                        <div class="work-date">Nov 2018 – Dec 2019</div>
+                    </div>
+                    <div class="work-body">
+                        <ul>
+                            <li>Trained students for SAT, GRE, and TOEFL examinations.</li>
+                            <li>Advised students on education opportunities, application procedures, visa applications, and other documentation for study abroad.</li>
+                            <li>Liaised with students, other offices, and client institutions.</li>
+                            <li>Assisted with the general running of the office to ensure smooth operations.</li>
+                        </ul>
+                        <div class="work-tags"><span class="wtag">Mentoring</span><span class="wtag">Counselling</span></div>
+                    </div>
+                </div>
 
-    <!-- Accessible Tab Logic -->
-    <script>
-        const tabs = document.querySelectorAll('.tab-btn');
-        const contents = document.querySelectorAll('.tab-content');
+            </div>
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Remove active states
-                tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-                contents.forEach(c => {
-                    c.classList.remove('active');
-                    c.setAttribute('hidden', 'true');
-                });
+            <!-- ── EDUCATION ── -->
+            <div id="tab-education" class="tab-pane">
+                <div class="edu-item">
+                    <div class="edu-line">
+                        <div class="edu-dot" style="background:var(--teal)"></div>
+                        <div class="edu-dash"></div>
+                    </div>
+                    <div>
+                        <div class="edu-degree">Master of Science in Bioinformatics</div>
+                        <div class="edu-school">Sardar Patel University</div>
+                        <div class="edu-year">2015 – 2017</div>
+                    </div>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-line">
+                        <div class="edu-dot"></div>
+                    </div>
+                    <div>
+                        <div class="edu-degree">Bachelor of Science in Bioinformatics</div>
+                        <div class="edu-school">Sardar Patel University</div>
+                        <div class="edu-year">2012 – 2015</div>
+                    </div>
+                </div>
+            </div>
 
-                // Add active state to clicked tab
-                tab.setAttribute('aria-selected', 'true');
-                const targetId = tab.getAttribute('aria-controls');
-                const targetContent = document.getElementById(targetId);
-                
-                targetContent.classList.add('active');
-                targetContent.removeAttribute('hidden');
-            });
+            <!-- ── PROJECTS & TALKS ── -->
+            <div id="tab-projects" class="tab-pane">
 
-            // Keyboard navigation for tabs (Left/Right Arrows)
-            tab.addEventListener('keydown', (e) => {
-                const index = Array.from(tabs).indexOf(tab);
-                let newIndex;
+                <div class="proj-card">
+                    <div class="proj-head">
+                        <div>
+                            <div class="proj-award">🏆 Runner-Up</div>
+                            <div class="proj-title">The Geometry Chronicles: A Tale of 3 Animated Stories</div>
+                        </div>
+                        <div class="proj-date">Plotnine Contest · 2025</div>
+                    </div>
+                    <p class="proj-desc">A collection of generative-art animations created using Plotnine, exploring the intersection of data visualization and creative coding. This submission earned the Runner-Up position, standing out for its artistic interpretation of data.</p>
+                    <div class="proj-links">
+                        <a href="https://posit.co/blog/winner-of-the-2025-plotnine-plotting-contest/" target="_blank" class="proj-link">↗ View Result</a>
+                        <a href="https://github.com/PablaOO7/Plotnine-Contest-2025" target="_blank" class="proj-link">⌥ View Project</a>
+                    </div>
+                </div>
 
-                if (e.key === 'ArrowRight') {
-                    newIndex = (index + 1) % tabs.length;
-                    tabs[newIndex].focus();
-                    tabs[newIndex].click();
-                } else if (e.key === 'ArrowLeft') {
-                    newIndex = (index - 1 + tabs.length) % tabs.length;
-                    tabs[newIndex].focus();
-                    tabs[newIndex].click();
+                <div class="proj-card">
+                    <div class="proj-head">
+                        <div>
+                            <div class="proj-award">🏅 Honorable Mention</div>
+                            <div class="proj-title">Sustainable Milk Comparison</div>
+                        </div>
+                        <div class="proj-date">Posit Table Contest · 2025</div>
+                    </div>
+                    <p class="proj-desc">An interactive table design focused on clarity, usability, and aesthetic presentation. This submission received an Honorable Mention, highlighting effective communication of structured data through modern table design techniques.</p>
+                    <div class="proj-links">
+                        <a href="https://posit.co/blog/2025-table-contest-winners/" target="_blank" class="proj-link">↗ View Result</a>
+                        <a href="https://github.com/PablaOO7/Posit-Table-Contest-2025" target="_blank" class="proj-link">⌥ View Project</a>
+                    </div>
+                </div>
+
+                <div class="proj-card">
+                    <div class="proj-head">
+                        <div>
+                            <div class="proj-award">🎤 Conference Talk</div>
+                            <div class="proj-title">Interactive and Reproducible Reports with Quarto</div>
+                        </div>
+                        <div class="proj-date">R/Pharma · 2025</div>
+                    </div>
+                    <p class="proj-desc">A talk on building dynamic and reproducible reports using Quarto, combining R and Python within a single document, enabling interactive exploration with Observable JS, and incorporating scrollytelling techniques with the CloseRead extension for more effective and transparent data communication.</p>
+                    <div class="proj-links">
+                        <a href="https://www.youtube.com/watch?v=_9_gjYm-tW4&list=PLe44BG0Qk9XWHDJUljUeYIhtt3Aq12qI8" target="_blank" class="proj-link">▶ Video Recording</a>
+                        <a href="https://github.com/PablaOO7/R-Pharma-Conference-2025" target="_blank" class="proj-link">⌥ View Project</a>
+                    </div>
+                </div>
+
+                <div class="proj-card">
+                    <div class="proj-head">
+                        <div>
+                            <div class="proj-title">30 Days of AI with Streamlit</div>
+                        </div>
+                        <div class="proj-date">Streamlit/Snowflake · 2026</div>
+                    </div>
+                    <p class="proj-desc">A hands-on learning challenge focused on building AI-powered applications using Streamlit. This project documents daily explorations, covering practical implementations of machine learning, generative AI, and interactive app development.</p>
+                    <div class="proj-links">
+                        <a href="https://discuss.streamlit.io/t/the-30-days-of-ai-challenge-starts-today/120455" target="_blank" class="proj-link">↗ View Discussion</a>
+                        <a href="https://github.com/PablaOO7/30-Days-of-AI-Streamlit" target="_blank" class="proj-link">⌥ View Project</a>
+                    </div>
+                </div>
+
+                <div class="proj-card">
+                    <div class="proj-head">
+                        <div>
+                            <div class="proj-title">Interactive Meteorological Insights for Indian States</div>
+                        </div>
+                        <div class="proj-date">Posit Table Contest · 2024</div>
+                    </div>
+                    <p class="proj-desc">This project presents meteorological data for various Indian states, featuring interactive tables and visualizations using ApexCharts and Toast UI, inspired by the aesthetics of Kung Fu Panda.</p>
+                    <div class="proj-links">
+                        <a href="https://shinyoo7.quarto.pub/indian-states-meteorological-data/" target="_blank" class="proj-link">↗ View Table</a>
+                        <a href="https://github.com/PablaOO7/Posit-Table-Contest-2024" target="_blank" class="proj-link">⌥ View Project</a>
+                    </div>
+                </div>
+
+                <div class="proj-card">
+                    <div class="proj-head">
+                        <div>
+                            <div class="proj-title">Plotnine: Artistic Potential of Data Visualization</div>
+                        </div>
+                        <div class="proj-date">Plotnine Contest · 2024</div>
+                    </div>
+                    <p class="proj-desc">A showcase of three distinct entries in the Plotnine contest, highlighting the versatility of data visualization through artistic expressions and scientific analysis.</p>
+                    <div class="proj-links">
+                        <a href="https://github.com/PablaOO7/Plotnine-Contest-2024" target="_blank" class="proj-link">⌥ View Project</a>
+                    </div>
+                </div>
+
+                <div class="proj-card">
+                    <div class="proj-head">
+                        <div>
+                            <div class="proj-title">Interactive Shiny Dashboard: Exploring the Star Wars Universe</div>
+                        </div>
+                        <div class="proj-date">Shiny Contest · 2024</div>
+                    </div>
+                    <p class="proj-desc">Embark on an intergalactic journey with our interactive Shiny dashboard! Explore key statistics of legendary characters, visualize the balance of the Force, and dive into the rich tapestry of Star Wars communities. This dashboard brings the epic saga to life through engaging data visualization.</p>
+                    <div class="proj-links">
+                        <a href="https://pabla007.shinyapps.io/posit-shiny-contest-2024/" target="_blank" class="proj-link">↗ View App</a>
+                        <a href="https://github.com/PablaOO7/Posit-Shiny-Contest-2024" target="_blank" class="proj-link">⌥ View Project</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ── CERTIFICATES ── -->
+            <div id="tab-certificates" class="tab-pane">
+
+                <div class="cert-card">
+                    <div class="cert-title">Proteomics Advanced Winter School 2021</div>
+                    <div class="cert-issuer">IIT-Bombay · 3-Week Workshop</div>
+                    <div class="cert-desc">Learned about gel-based, Mass spec-based, Targeted, Quantitative, and data-analysis techniques. In the third week, used tools like MetaboAnalyst, Reactome, and STRING for a project on "Global proteomics analysis of colon cancer vs control samples to understand biological alteration."</div>
+                    <a href="https://github.com/PablaOO7/career-canvas/blob/master/iitb_internship_certificate.pdf" target="_blank" class="cert-link">↗ View Certificate</a>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-title">AI Product Manager Nanodegree</div>
+                    <div class="cert-issuer">Udacity · Earned August 13, 2021</div>
+                    <a href="https://github.com/PablaOO7/career-canvas/blob/master/udacity_certificate.pdf" target="_blank" class="cert-link">↗ View Certificate</a>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-title">BioCurator Volunteer</div>
+                    <div class="cert-issuer">BdataA / IBAB · Earned December 18, 2020</div>
+                    <div class="cert-desc">Volunteer biocuration work contributing to structured biological knowledge bases.</div>
+                    <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+                        <a href="https://github.com/PablaOO7/career-canvas/blob/master/Authentication%20Letter.pdf" target="_blank" class="cert-link">↗ Authentication Letter</a>
+                        <a href="https://github.com/PablaOO7/career-canvas/blob/master/Certificate.png" target="_blank" class="cert-link">↗ Certificate</a>
+                        <a href="http://www.covidkosha.org/team_profile.pl" target="_blank" class="cert-link">↗ View Team</a>
+                    </div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-title">Data Analyst in Python</div>
+                    <div class="cert-issuer">Dataquest · Earned October 27, 2020</div>
+                    <a href="https://app.dataquest.io/view_cert/ISXGX2L7MH51PCBJ7R7T/" target="_blank" class="cert-link">↗ View Certificate</a>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-title">Whole Genome Sequencing of Bacterial Genomes - Tools and Applications</div>
+                    <div class="cert-issuer">Technical University of Denmark × Coursera · January 30, 2020</div>
+                    <a href="https://coursera.org/share/7ddc8fc580644af7b8d080595cc24d62" target="_blank" class="cert-link">↗ View Certificate</a>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-title">Disease Clusters</div>
+                    <div class="cert-issuer">Johns Hopkins University × Coursera · May 17, 2020</div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-title">Bacterial Genomes: Comparative Genomics Using Artemis Comparison Tool (ACT)</div>
+                    <div class="cert-issuer">Wellcome Trust Sanger Institute × FutureLearn · January 27, 2020</div>
+                    <a href="https://www.futurelearn.com/certificates/k0y9ag0" target="_blank" class="cert-link">↗ View Certificate</a>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-left">Ajax Singh Pabla · Computational Biologist · India · 2025</div>
+        <div class="footer-right">pablaAjax94@gmail.com · github.com/PablaOO7</div>
+    </footer>
+
+</div>
+
+<script>
+/* ── TABS ── */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+});
+
+/* ── TYPING EFFECT ── */
+const phrases = [
+    'Building omics pipelines at scale.',
+    'Visualizing biology as data.',
+    'R Shiny · Streamlit · Seurat · Docker.',
+    'scRNA-seq · GWAS · Proteomics.',
+    'Turning biological data into insight.'
+];
+let pi = 0, ci = 0, deleting = false;
+const el = document.getElementById('typing-text');
+function type() {
+    const phrase = phrases[pi];
+    if (!deleting) {
+        el.textContent = phrase.slice(0, ++ci);
+        if (ci === phrase.length) { deleting = true; setTimeout(type, 2000); return; }
+    } else {
+        el.textContent = phrase.slice(0, --ci);
+        if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+    }
+    setTimeout(type, deleting ? 40 : 70);
+}
+type();
+
+/* ── DNA CANVAS ── */
+(function() {
+    const canvas = document.getElementById('dna-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = 110, H = 220;
+    let t = 0;
+    const TEAL = '#4ec8a6', TEAL2 = '#2a9d80', AMBER = '#e8a84c';
+    const pairs = ['A-T','T-A','G-C','C-G','A-T','G-C','T-A','C-G','A-T','G-C','T-A'];
+
+    function drawDNA() {
+        ctx.clearRect(0, 0, W, H);
+        const cx = W / 2;
+        const steps = 18;
+        const yStep = H / steps;
+
+        // Draw backbones + rungs
+        for (let i = 0; i < steps; i++) {
+            const y = i * yStep;
+            const phase = (i / steps) * Math.PI * 2 + t;
+            const x1 = cx + Math.sin(phase) * 36;
+            const x2 = cx + Math.sin(phase + Math.PI) * 36;
+            const depth1 = (Math.sin(phase) + 1) / 2;
+            const depth2 = (Math.sin(phase + Math.PI) + 1) / 2;
+
+            // Rungs (base pairs)
+            const midY = y + yStep / 2;
+            const mx1 = cx + Math.sin(phase + 0.3) * 36;
+            const mx2 = cx + Math.sin(phase + Math.PI + 0.3) * 36;
+            const rAlpha = 0.3 + 0.4 * Math.abs(Math.cos(phase + 0.3));
+            ctx.save();
+            ctx.globalAlpha = rAlpha;
+            ctx.strokeStyle = i % 3 === 0 ? AMBER : TEAL2;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(mx1, midY);
+            ctx.lineTo(mx2, midY);
+            ctx.stroke();
+            ctx.restore();
+
+            // Backbone dots
+            const nextPhase = ((i + 1) / steps) * Math.PI * 2 + t;
+            const nx1 = cx + Math.sin(nextPhase) * 36;
+            const nx2 = cx + Math.sin(nextPhase + Math.PI) * 36;
+            const ny = (i + 1) * yStep;
+
+            ctx.save();
+            ctx.globalAlpha = 0.7 + 0.3 * depth1;
+            ctx.strokeStyle = TEAL;
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            ctx.moveTo(x1, y);
+            ctx.lineTo(nx1, ny);
+            ctx.stroke();
+            ctx.restore();
+
+            ctx.save();
+            ctx.globalAlpha = 0.7 + 0.3 * depth2;
+            ctx.strokeStyle = TEAL2;
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            ctx.moveTo(x2, y);
+            ctx.lineTo(nx2, ny);
+            ctx.stroke();
+            ctx.restore();
+
+            // Node dots
+            if (i % 2 === 0) {
+                ctx.save();
+                ctx.globalAlpha = 0.9;
+                ctx.fillStyle = depth1 > 0.5 ? TEAL : TEAL2;
+                ctx.beginPath(); ctx.arc(x1, y, 3, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = depth2 > 0.5 ? TEAL2 : TEAL;
+                ctx.beginPath(); ctx.arc(x2, y, 3, 0, Math.PI * 2); ctx.fill();
+                ctx.restore();
+            }
+        }
+        t += 0.018;
+        requestAnimationFrame(drawDNA);
+    }
+    drawDNA();
+})();
+
+/* ── WORD MAZE ── */
+(function() {
+    const COLS = 14, ROWS = 14;
+    const words = [
+        { w: 'AJAX',        clue: 'That\'s me!' },
+        { w: 'BIOINFORMATICS', clue: 'My domain' },
+        { w: 'SHINY',       clue: 'R Shiny dev' },
+        { w: 'PYTHON',      clue: 'Lang I code in' },
+        { w: 'SEURAT',      clue: 'scRNA-seq tool' },
+        { w: 'DOCKER',      clue: 'Containerization' },
+        { w: 'UMAP',        clue: 'Dim reduction' },
+        { w: 'OMICS',       clue: 'Multi-omics' },
+        { w: 'QUARTO',      clue: 'Publishing tool' },
+        { w: 'INDIA',       clue: 'Where I\'m based' }
+    ];
+
+    const DIRS = [[0,1],[1,0],[0,-1],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]];
+    const grid = Array.from({length: ROWS}, () => Array(COLS).fill(''));
+    const placed = []; // {word, cells:[{r,c}]}
+
+    function tryPlace(word, r, c, dr, dc) {
+        const cells = [];
+        for (let i = 0; i < word.length; i++) {
+            const nr = r + i*dr, nc = c + i*dc;
+            if (nr < 0 || nr >= ROWS || nc < 0 || nc >= COLS) return null;
+            if (grid[nr][nc] && grid[nr][nc] !== word[i]) return null;
+            cells.push({r: nr, c: nc});
+        }
+        return cells;
+    }
+
+    function placeAll() {
+        for (const {w} of words) {
+            let done = false;
+            for (let attempt = 0; attempt < 200 && !done; attempt++) {
+                const [dr, dc] = DIRS[Math.floor(Math.random() * 4)]; // only 4 dirs for readability
+                const r = Math.floor(Math.random() * ROWS);
+                const c = Math.floor(Math.random() * COLS);
+                const cells = tryPlace(w, r, c, dr, dc);
+                if (cells) {
+                    cells.forEach(({r, c}, i) => { grid[r][c] = w[i]; });
+                    placed.push({word: w, cells, found: false});
+                    done = true;
                 }
-            });
+            }
+        }
+        // Fill blanks
+        const alpha = 'ACGTPQWERMNDKLUVSXZBFHIJ';
+        for (let r = 0; r < ROWS; r++)
+            for (let c = 0; c < COLS; c++)
+                if (!grid[r][c]) grid[r][c] = alpha[Math.floor(Math.random() * alpha.length)];
+    }
+
+    placeAll();
+
+    // Render
+    const mazeEl = document.getElementById('maze-grid');
+    const cellEls = [];
+    for (let r = 0; r < ROWS; r++) {
+        cellEls[r] = [];
+        for (let c = 0; c < COLS; c++) {
+            const d = document.createElement('div');
+            d.className = 'mc';
+            d.textContent = grid[r][c];
+            d.dataset.r = r; d.dataset.c = c;
+            // Mark word cells
+            if (placed.some(p => p.cells.some(cell => cell.r === r && cell.c === c))) {
+                d.classList.add('word-cell');
+            }
+            mazeEl.appendChild(d);
+            cellEls[r][c] = d;
+        }
+    }
+
+    // Word list
+    const wlEl = document.getElementById('maze-wordlist');
+    const wordEls = {};
+    words.forEach(({w, clue}) => {
+        const span = document.createElement('span');
+        span.className = 'maze-word';
+        span.textContent = w;
+        span.title = clue;
+        wlEl.appendChild(span);
+        wordEls[w] = span;
+    });
+
+    // Interaction
+    let selecting = false, selCells = [];
+    const msgEl = document.getElementById('maze-msg');
+
+    function getCellAt(el) {
+        if (!el || !el.classList.contains('mc')) return null;
+        return {r: +el.dataset.r, c: +el.dataset.c};
+    }
+
+    function clearSelection() {
+        selCells.forEach(({r,c}) => {
+            if (!isFoundCell(r,c)) cellEls[r][c].classList.remove('selected');
         });
-    </script>
+        selCells = [];
+    }
+
+    function isFoundCell(r, c) {
+        return placed.some(p => p.found && p.cells.some(cell => cell.r === r && cell.c === c));
+    }
+
+    function checkWord() {
+        const selected = selCells.map(({r,c}) => grid[r][c]).join('');
+        const selReverse = [...selected].reverse().join('');
+        for (const p of placed) {
+            if (!p.found && (selected === p.word || selReverse === p.word)) {
+                p.found = true;
+                p.cells.forEach(({r,c}) => {
+                    cellEls[r][c].classList.remove('selected');
+                    cellEls[r][c].classList.add('found');
+                });
+                wordEls[p.word].classList.add('found-word');
+                const pw = words.find(x => x.w === p.word);
+                msgEl.textContent = `✓ ${p.word} — ${pw ? pw.clue : ''}`;
+                const foundCount = placed.filter(x => x.found).length;
+                if (foundCount === placed.length) {
+                    msgEl.textContent = '🎉 You found everything about Ajax!';
+                }
+                return;
+            }
+        }
+        msgEl.textContent = '';
+    }
+
+    mazeEl.addEventListener('mousedown', e => {
+        const cell = getCellAt(e.target);
+        if (!cell) return;
+        selecting = true;
+        clearSelection();
+        selCells = [cell];
+        cellEls[cell.r][cell.c].classList.add('selected');
+    });
+
+    mazeEl.addEventListener('mouseover', e => {
+        if (!selecting) return;
+        const cell = getCellAt(e.target);
+        if (!cell) return;
+        if (selCells.some(s => s.r === cell.r && s.c === cell.c)) return;
+        selCells.push(cell);
+        if (!isFoundCell(cell.r, cell.c)) cellEls[cell.r][cell.c].classList.add('selected');
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (!selecting) return;
+        selecting = false;
+        checkWord();
+        setTimeout(clearSelection, 400);
+    });
+
+    // Touch
+    mazeEl.addEventListener('touchstart', e => {
+        const touch = e.touches[0];
+        const el = document.elementFromPoint(touch.clientX, touch.clientY);
+        const cell = getCellAt(el);
+        if (!cell) return;
+        selecting = true; clearSelection();
+        selCells = [cell];
+        cellEls[cell.r][cell.c].classList.add('selected');
+        e.preventDefault();
+    }, {passive: false});
+
+    mazeEl.addEventListener('touchmove', e => {
+        if (!selecting) return;
+        const touch = e.touches[0];
+        const el = document.elementFromPoint(touch.clientX, touch.clientY);
+        const cell = getCellAt(el);
+        if (!cell) return;
+        if (selCells.some(s => s.r === cell.r && s.c === cell.c)) return;
+        selCells.push(cell);
+        if (!isFoundCell(cell.r, cell.c)) cellEls[cell.r][cell.c].classList.add('selected');
+        e.preventDefault();
+    }, {passive: false});
+
+    mazeEl.addEventListener('touchend', () => {
+        if (!selecting) return;
+        selecting = false;
+        checkWord();
+        setTimeout(clearSelection, 400);
+    });
+})();
+</script>
 </body>
 </html>
